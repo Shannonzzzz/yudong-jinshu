@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<meta name="description" content="依照玉洞金书校对稿，以十二时辰起盘，查阅一百四十四则完整占辞。">
+<title>玉洞金书 · 时辰排盘</title>
+<style>__STYLE__</style>
+</head>
+<body>
+<a class="skip-link" href="#cast-form">跳到起盘</a>
+<div class="page">
+<header class="masthead">
+<a class="brand" href="#workspace"><span class="seal" aria-hidden="true">玉</span><div><h1>玉洞金书</h1><p>时辰起盘与原文研读</p></div></a>
+<nav class="nav-links" aria-label="页面导航"><a class="nav-active" href="#workspace">排盘</a><a href="#reference" id="open-library">原文索引 <span>144</span></a><button type="button" id="theme-toggle">切换深色</button></nav>
+</header>
+<main>
+<div class="page-intro"><div><p class="eyebrow">时辰占法</p><h2>一事一占，循时而问。</h2><p>从所报时辰起甲，顺数至所问事项，查阅书中占辞。</p></div><a href="#reference" class="source-link" id="open-rules">起法与原文 <span aria-hidden="true">↗</span></a></div>
+<div class="workspace" id="workspace">
+<aside class="input-panel">
+<div class="panel-heading"><h2>起盘</h2><span>记事 · 取时</span></div>
+<form id="cast-form">
+<label class="field-label" id="topic-label" for="topic">所问事项</label>
+<select id="topic" name="topic" required hidden aria-hidden="true" tabindex="-1"></select>
+<div id="topic-grid" class="topic-grid" role="group" aria-labelledby="topic-label"></div>
+<p class="field-hint" id="topic-hint"></p>
+<label class="field-label" for="question">所问之事 <span class="optional">选填</span></label>
+<textarea id="question" rows="2" maxlength="500" placeholder="这次想问什么？"></textarea>
+<label class="field-label" for="date">记录日期</label>
+<input id="date" type="date" min="0001-01-01" max="9999-12-31" required>
+<fieldset class="mode-picker"><legend>取时方式</legend><div class="mode-options">
+<label><input type="radio" name="mode" value="clock" checked><span>钟点换算</span></label>
+<label><input type="radio" name="mode" value="branch"><span>手选时辰</span></label>
+</div></fieldset>
+<div id="clock-group">
+<div class="label-row"><label class="field-label" for="clock">北京时间</label><button id="use-now" class="text-button" type="button">用当前时间</button></div>
+<input id="clock" type="time" required step="60">
+</div>
+<div id="branch-group" hidden><label class="field-label" for="hour">所报时辰</label><select id="hour" disabled></select></div>
+<div class="time-preview" aria-live="polite"><span>起盘时辰</span><strong id="hour-preview">待定</strong><span id="range-preview"></span></div>
+<button class="primary-button" id="submit" type="submit"><span>起盘查文</span><span aria-hidden="true">↗</span></button>
+<p id="form-error" class="error" role="alert"></p>
+</form>
+<details class="time-help"><summary>关于取时</summary><p class="source-note">原稿未细说取时规则。钟点按北京时间 UTC+08:00 及常见双小时制换算，不作真太阳时校正。日期仅作记录。</p></details>
+</aside>
+<section class="reading-panel" aria-labelledby="result-heading">
+<div class="result-top"><h2 id="result-heading" tabindex="-1">本次排盘</h2><span class="status-label" id="result-status" role="status">等待起盘</span></div>
+<div id="empty-state" class="empty-state">
+<div class="chart-reading empty-board"><div class="chart" aria-hidden="true"><div class="chart-ring" id="empty-ring"></div><div class="chart-center empty-center"><span class="chart-kicker">以时为始</span><strong>待起盘</strong><span class="chart-center-note">十二时辰 · 十二事项</span></div></div><div class="empty-copy"><p class="board-label">一干二支，查书见辞</p><h3>先定所问，<br>再取时辰。</h3><p>选择一件所问之事，<br>让书中占辞在此展开。</p></div></div>
+<div class="empty-guide"><div><span class="guide-title">如何起盘</span><p>选事项与时辰，点击「起盘查文」。</p></div><div><span class="guide-title">如何读盘</span><p>先读简断，再对照词句和顺数过程。</p></div></div>
+<div class="source-banner"><span class="book-mark" aria-hidden="true">书</span><div><h3>一百四十四则，逐条可查</h3><p>词句、简断及等级均据《玉洞金书》校对稿收录。</p></div></div>
+</div>
+<article id="result" hidden>
+<div class="chart-reading">
+<div class="chart" aria-label="十二地支排盘"><div class="chart-ring" id="chart-ring"></div><div class="chart-center"><span class="chart-kicker">一干二支</span><h3 id="result-key"></h3><p id="result-subtitle"></p><span id="result-grade" class="grade"></span></div></div>
+<div class="brief"><p class="board-label">原文简断</p><p id="judgment"></p><p class="legend"><span class="legend-hour"></span>起点时辰 <span class="legend-topic"></span>所问事项</p></div>
+</div>
+<div class="reading-body">
+<p id="print-meta" class="print-meta"></p>
+<div class="poem-section"><div class="subheading"><h3>原文词句</h3><span id="tune" class="tune"></span></div><p id="poem" class="poem"></p><p id="original-note" class="original-note" hidden></p></div>
+<div class="derivation"><div class="subheading"><h3>顺数过程</h3><span id="step-count"></span></div><div id="steps" class="steps"></div><p id="composition" class="composition"></p></div>
+<div class="result-actions"><button type="button" id="export" class="secondary-button">导出 Markdown 记录 <span aria-hidden="true">↗</span></button><button type="button" id="print" class="text-button">打印 / 存为 PDF</button></div>
+<p class="provenance" id="provenance"></p>
+</div>
+</article>
+</section>
+</div>
+<details class="reference" id="reference"><summary><div><span class="eyebrow">查阅原书</span><span class="reference-title">原文索引与起法说明</span></div><span class="reference-count">144 则 <span aria-hidden="true">＋</span></span></summary>
+<div class="reference-body"><div class="rule-layout"><h3>起法口诀</h3><div><p class="rule-text" id="rule-text"></p><p>地支顺序为子丑寅卯辰巳午未申酉戌亥；起点算第一位配甲，天干到癸后回甲。三字次序为「天干＋事项地支＋时辰地支」。</p></div></div>
+<div class="search-row"><label class="field-label" for="search">检索原文</label><input id="search" type="search" placeholder="搜索卦名、词句或简断"></div><p id="search-count" class="field-hint" aria-live="polite"></p><div id="library" class="library"></div>
+</div></details>
+</main>
+<footer><p>玉洞金书 <span>据校对稿整理</span></p><p>传统文本供研读参考；病灾、孕产等占辞不作为现实诊断或决策依据。</p></footer>
+</div>
+<noscript><p class="noscript">请使用允许 JavaScript 的浏览器打开本文件。</p></noscript>
+<script type="application/json" id="source-data">__DATA__</script>
+<script>__CORE__</script>
+<script>__UI__</script>
+</body>
+</html>
